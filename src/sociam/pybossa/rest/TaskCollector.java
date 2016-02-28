@@ -22,9 +22,8 @@ public class TaskCollector {
 	@GET
 	@Produces("application/json")
 	public Response testing(@QueryParam("text") String text, @QueryParam("task_id") Integer task_id,
-			@QueryParam("project_id") Integer project_id, @QueryParam("contribution_id") String contribution_id,
-			@QueryParam("contributor_name") String contributor_name, @QueryParam("source") String source)
-			throws JSONException {
+			@QueryParam("project_id") Integer project_id, @QueryParam("contributor_name") String contributor_name,
+			@QueryParam("source") String source) throws JSONException {
 		try (InputStream stream = TaskCollector.class.getResourceAsStream("/log4j.properties")) {
 			PropertyConfigurator.configure(stream);
 		} catch (Exception e) {
@@ -34,29 +33,26 @@ public class TaskCollector {
 		Config.reload();
 		JSONObject data = new JSONObject();
 		JSONObject status = new JSONObject();
-		if (text != null && task_id != null && project_id != null && contribution_id != null && contributor_name != null
-				&& source != null) {
+		if (text != null && task_id != null && project_id != null && contributor_name != null && source != null) {
 			logger.debug("receiving a GET request with the following data + text=" + text + " task_id=" + task_id
-					+ " project_id=" + project_id + " contribution_id=" + contribution_id + " contributor_name="
-					+ contributor_name + " source=" + source);
-			Boolean isInserted = sociam.pybossa.TaskCollector.insertTaskRun(text, task_id, project_id, contribution_id,
-					contributor_name, source);
+					+ " project_id=" + project_id + " contributor_name=" + contributor_name + " source=" + source);
+			Boolean isInserted = sociam.pybossa.TaskCollector.insertTaskRun(text, task_id, project_id, contributor_name,
+					source);
 			if (isInserted) {
-				logger.info("Inserting a task run with the contribution_id=" + contribution_id);
-				status.put("status", "success");
+				logger.info("TaskRun was inserted");
+
 				data.put("text", text);
 				data.put("task_id", task_id);
 				data.put("project_id", project_id);
-				data.put("contribution_id", contribution_id);
 				data.put("contributor_name", contributor_name);
 				data.put("source", source);
 				status.put("data", data);
+				status.put("status", "success");
 				String result = status.toString();
 				return Response.status(200).entity(result).build();
 			} else {
-				logger.error("Task run with contribution_id =" + contribution_id + " was not inserted");
+				logger.error("Task run could not be inserted");
 				status.put("status", "error");
-
 				return Response.status(500).entity(status.toString()).build();
 			}
 
