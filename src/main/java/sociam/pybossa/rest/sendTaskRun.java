@@ -21,7 +21,7 @@ public class sendTaskRun {
 
 	@GET
 	@Produces("application/json")
-	public Response testing(@QueryParam("text") String text, @QueryParam("task_id") Integer task_id,
+	public Response insertTaskRun(@QueryParam("text") String text, @QueryParam("task_id") Integer task_id,
 			@QueryParam("project_id") Integer project_id, @QueryParam("contributor_name") String contributor_name,
 			@QueryParam("source") String source) throws JSONException {
 
@@ -30,7 +30,6 @@ public class sendTaskRun {
 		try {
 			InputStream stream = sendTaskRun.class.getResourceAsStream("/log4j.properties");
 			PropertyConfigurator.configure(stream);
-
 			Config.reload();
 
 			if (text != null && task_id != null && project_id != null && contributor_name != null && source != null) {
@@ -53,6 +52,7 @@ public class sendTaskRun {
 				} else {
 					logger.error("Task run could not be inserted");
 					status.put("status", "error");
+					status.put("message", "It could be that you already inserted the task run?");
 					return Response.status(500).entity(status.toString()).build();
 				}
 
@@ -65,7 +65,7 @@ public class sendTaskRun {
 
 		} catch (Exception e) {
 			logger.error("Error", e);
-			status.put("status", "Error: " + e);
+			status.put("status", "internal error: " + e);
 			return Response.status(500).entity(status.toString()).build();
 		}
 	}
