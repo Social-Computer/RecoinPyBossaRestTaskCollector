@@ -8,6 +8,7 @@
 	<name>Saud Aljaloud</name>
 	<description>A rest api for the TaskCollector</description>
 	<build>
+		<finalName>${project.artifactId}</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
