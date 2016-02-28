@@ -52,7 +52,7 @@ public class sendTaskRun {
 				} else {
 					logger.error("Task run could not be inserted");
 					status.put("status", "error");
-					status.put("message", "It could be that you already inserted the task run?");
+					status.put("message", "Did you already inserted the task run?");
 					return Response.status(500).entity(status.toString()).build();
 				}
 
