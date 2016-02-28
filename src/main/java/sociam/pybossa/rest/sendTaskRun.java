@@ -51,8 +51,8 @@ public class sendTaskRun {
 					return Response.status(200).entity(result).build();
 				} else {
 					logger.error("Task run could not be inserted");
-					status.put("status", "error");
 					status.put("message", "Did you already inserted the task run?");
+					status.put("status", "error");
 					return Response.status(500).entity(status.toString()).build();
 				}
 
