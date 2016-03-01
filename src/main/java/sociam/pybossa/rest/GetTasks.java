@@ -33,10 +33,12 @@ public class GetTasks {
 				offset = 0;
 			}
 			result = TaskPerformer.getTasks(offset);
-
+			result.put("status", "success");
 			return Response.status(200).entity(result.toString()).build();
 		} catch (Exception e) {
 			logger.error("error", e);
+			result.put("status", "error");
+			result.put("message", e);
 			return Response.status(500).entity(result.toString()).build();
 		}
 	}
