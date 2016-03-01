@@ -10,9 +10,9 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import sociam.pybossa.TaskPerformer;
 import sociam.pybossa.config.Config;
 
 @Path("/getTasks")
@@ -32,8 +32,9 @@ public class GetTasks {
 			if (offset == null) {
 				offset = 0;
 			}
+			result = TaskPerformer.getTasks(offset);
 
-			return Response.status(500).entity(result.toString()).build();
+			return Response.status(200).entity(result.toString()).build();
 		} catch (Exception e) {
 			logger.error("error", e);
 			return Response.status(500).entity(result.toString()).build();
