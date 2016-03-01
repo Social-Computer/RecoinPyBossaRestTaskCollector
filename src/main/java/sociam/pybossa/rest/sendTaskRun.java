@@ -20,7 +20,7 @@ public class sendTaskRun {
 	private static final Logger logger = Logger.getLogger(sendTaskRun.class);
 
 	@GET
-	@Produces("application/json")
+	@Produces("application/json" + ";charset=utf-8")
 	public Response insertTaskRun(@QueryParam("text") String text, @QueryParam("task_id") Integer task_id,
 			@QueryParam("project_id") Integer project_id, @QueryParam("contributor_name") String contributor_name,
 			@QueryParam("source") String source) throws JSONException {

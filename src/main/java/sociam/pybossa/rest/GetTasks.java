@@ -20,7 +20,7 @@ public class GetTasks {
 	private static final Logger logger = Logger.getLogger(sendTaskRun.class);
 
 	@GET
-	@Produces("application/json")
+	@Produces("application/json" + ";charset=utf-8")
 	public Response getTasks(@QueryParam("offset") Integer offset) {
 		JSONObject result = new JSONObject();
 
