@@ -21,7 +21,7 @@ public class GetTasks {
 
 	@GET
 	@Produces("application/json" + ";charset=utf-8")
-	public Response getTasks(@QueryParam("offset") Integer offset) {
+	public Response getTasks() {
 		JSONObject result = new JSONObject();
 
 		try {
@@ -29,10 +29,20 @@ public class GetTasks {
 			InputStream stream = sendTaskRun.class.getResourceAsStream("/log4j.properties");
 			PropertyConfigurator.configure(stream);
 			Config.reload();
-			if (offset == null) {
-				offset = 0;
+
+			result = TaskPerformer.getLatestUnAnsweredTask();
+			if (result != null) {
+				result.put("message", "not answered");
+			} else {
+				result = TaskPerformer.getLatestUncompletedAnsweredTask();
+				if (result != null) {
+					result.put("message", "has been answered, but not completed yet");
+				} else {
+					result = new JSONObject();
+					result.put("message", "There are not tasks");
+				}
 			}
-			result = TaskPerformer.getTasks(offset);
+
 			result.put("status", "success");
 			return Response.status(200).entity(result.toString()).build();
 		} catch (Exception e) {
