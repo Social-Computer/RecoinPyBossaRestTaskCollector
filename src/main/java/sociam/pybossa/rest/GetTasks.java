@@ -32,14 +32,14 @@ public class GetTasks {
 
 			result = TaskPerformer.getLatestUnAnsweredTask();
 			if (result != null) {
-				result.put("message", "not answered");
+				result.put("message", "The task has not been answered before");
 			} else {
 				result = TaskPerformer.getLatestUncompletedAnsweredTask();
 				if (result != null) {
-					result.put("message", "has been answered, but not completed yet");
+					result.put("message", "The task has some answeres, but not yet completed");
 				} else {
 					result = new JSONObject();
-					result.put("message", "There are not tasks");
+					result.put("message", "There are no tasks to be answered!");
 				}
 			}
 
