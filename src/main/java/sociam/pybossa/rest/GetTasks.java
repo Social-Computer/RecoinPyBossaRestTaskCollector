@@ -5,15 +5,14 @@ import java.io.InputStream;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.json.JSONObject;
 
-import sociam.pybossa.TaskPerformer;
 import sociam.pybossa.config.Config;
+import sociam.pybossa.methods.MongodbMethods;
 
 @Path("/getTasks")
 public class GetTasks {
@@ -30,11 +29,11 @@ public class GetTasks {
 			PropertyConfigurator.configure(stream);
 			Config.reload();
 
-			result = TaskPerformer.getLatestUnAnsweredTask();
+			result = MongodbMethods.getLatestUnAnsweredTask();
 			if (result != null) {
 				result.put("message", "The task has not been answered before");
 			} else {
-				result = TaskPerformer.getLatestUncompletedAnsweredTask();
+				result = MongodbMethods.getLatestUncompletedAnsweredTask();
 				if (result != null) {
 					result.put("message", "The task has some answeres, but not yet completed");
 				} else {
