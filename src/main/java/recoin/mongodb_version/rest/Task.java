@@ -33,6 +33,11 @@ public class Task {
 			Config.reload();
 
 			data = MongodbMethods.getTaskFromMongoDB(id);
+			if (data == null) {
+				data = new Document();
+				String message = "no task with id " + id;
+				data.put("message", message);
+			}
 
 			data.put("status", "success");
 			return Response.status(200).entity(data.toJson().toString()).build();
@@ -85,6 +90,11 @@ public class Task {
 			Config.reload();
 
 			data = MongodbMethods.getTaskRunsFromMongoDB(id);
+			if (data == null) {
+				data = new Document();
+				String message = "no responses for id " + id;
+				data.put("message", message);
+			}
 			data.put("status", "success");
 			return Response.status(200).entity(data.toJson().toString()).build();
 		} catch (Exception e) {
