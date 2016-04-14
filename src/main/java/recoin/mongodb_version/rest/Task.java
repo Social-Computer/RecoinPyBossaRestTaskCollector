@@ -36,7 +36,7 @@ public class Task {
 			if (data == null) {
 				data = new Document();
 				String message = "no task with id " + id;
-				data.put("message", message);
+				data.put("message", "");
 			}
 
 			data.put("status", "success");
@@ -50,33 +50,33 @@ public class Task {
 		}
 	}
 
-	// @GET
-	// @Path("{id}")
-	// @Produces("application/json-ld" + ";charset=utf-8")
-	// public Response toJsonLD(@PathParam("id") int id) {
-	// Document data = new Document();
-	// JSONObject jsonLD = new JSONObject();
-	// try {
-	//
-	// InputStream stream =
-	// sendTaskRun.class.getResourceAsStream("/log4j.properties");
-	// PropertyConfigurator.configure(stream);
-	// Config.reload();
-	//
-	// data = MongodbMethods.getTaskFromMongoDB(id);
-	// jsonLD.put("@context",
-	// "http://recoin.cloudapp.net/social-computer/task/");
-	// jsonLD.put("@type", "task");
-	//
-	// data.put("status", "success");
-	// return Response.status(200).entity(data.toJson().toString()).build();
-	// } catch (Exception e) {
-	// logger.error("error", e);
-	// data.put("status", "error");
-	// data.put("message", e);
-	// return Response.status(500).entity(data.toJson().toString()).build();
-	// }
-	// }
+	 @GET
+	 @Path("{id}")
+	 @Produces("application/json-ld" + ";charset=utf-8")
+	 public Response toJsonLD(@PathParam("id") int id) {
+	 Document data = new Document();
+	 JSONObject jsonLD = new JSONObject();
+	 try {
+	
+	 InputStream stream =
+	 sendTaskRun.class.getResourceAsStream("/log4j.properties");
+	 PropertyConfigurator.configure(stream);
+	 Config.reload();
+	
+	 data = MongodbMethods.getTaskFromMongoDB(id);
+	 jsonLD.put("@context",
+	 "http://recoin.cloudapp.net/social-computer/task/");
+	 jsonLD.put("@type", "task");
+	
+	 data.put("status", "success");
+	 return Response.status(200).entity(data.toJson().toString()).build();
+	 } catch (Exception e) {
+	 logger.error("error", e);
+	 data.put("status", "error");
+	 data.put("message", e);
+	 return Response.status(500).entity(data.toJson().toString()).build();
+	 }
+	 }
 
 	@GET
 	@Path("{id}/Responses")
@@ -93,7 +93,7 @@ public class Task {
 			if (data == null) {
 				data = new Document();
 				String message = "no responses for id " + id;
-				data.put("message", message);
+				data.put("message", "");
 			}
 			data.put("status", "success");
 			return Response.status(200).entity(data.toJson().toString()).build();
