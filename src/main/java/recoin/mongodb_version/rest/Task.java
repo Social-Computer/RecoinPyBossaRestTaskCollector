@@ -1,6 +1,7 @@
 package main.java.recoin.mongodb_version.rest;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.bson.Document;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import main.java.sociam.pybossa.rest.sendTaskRun;
@@ -82,17 +84,24 @@ public class Task {
 	@Produces("application/json" + ";charset=utf-8")
 	public Response getTaskRuns(@PathParam("id") int id) {
 		Document data = new Document();
+		ArrayList<Document> taskRuns = new ArrayList<Document>();
 		try {
 
 			InputStream stream = sendTaskRun.class.getResourceAsStream("/log4j.properties");
 			PropertyConfigurator.configure(stream);
 			Config.reload();
 
-			data = MongodbMethods.getTaskRunsFromMongoDB(id);
-			if (data == null) {
+			taskRuns = MongodbMethods.getTaskRunsFromMongoDB(id);
+			if (taskRuns == null) {
 				data = new Document();
 				String message = "no responses for id " + id;
 				data.put("message", "");
+			}else{
+				JSONArray array = new JSONArray();
+				for (Document document : taskRuns) {
+					array.put(document);
+				}
+				data.put("taskRuns", array);
 			}
 			data.put("status", "success");
 			return Response.status(200).entity(data.toJson().toString()).build();
