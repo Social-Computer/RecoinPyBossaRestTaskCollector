@@ -83,7 +83,7 @@ public class Task {
 	@Path("{id}/Responses")
 	@Produces("application/json" + ";charset=utf-8")
 	public Response getTaskRuns(@PathParam("id") int id) {
-		Document data = new Document();
+		JSONObject data = new JSONObject();
 		ArrayList<Document> taskRuns = new ArrayList<Document>();
 		try {
 
@@ -93,7 +93,7 @@ public class Task {
 
 			taskRuns = MongodbMethods.getTaskRunsFromMongoDB(id);
 			if (taskRuns == null) {
-				data = new Document();
+				data = new JSONObject();
 				String message = "no responses for id " + id;
 				data.put("message", "");
 			}else{
@@ -105,12 +105,12 @@ public class Task {
 				data.put("taskRuns", array);
 			}
 			data.put("status", "success");
-			return Response.status(200).entity(data.toJson().toString()).build();
+			return Response.status(200).entity(data.toString()).build();
 		} catch (Exception e) {
 			logger.error("error", e);
 			data.put("status", "error");
 			data.put("message", e);
-			return Response.status(500).entity(data.toJson().toString()).build();
+			return Response.status(500).entity(data.toString()).build();
 
 		}
 	}
