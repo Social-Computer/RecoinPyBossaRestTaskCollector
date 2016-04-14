@@ -99,7 +99,8 @@ public class Task {
 			}else{
 				JSONArray array = new JSONArray();
 				for (Document document : taskRuns) {
-					array.put(document.toJson());
+					JSONObject obj = new JSONObject(document.toJson().toString());
+					array.put(obj);
 				}
 				data.put("taskRuns", array);
 			}
