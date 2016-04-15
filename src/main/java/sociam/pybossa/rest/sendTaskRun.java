@@ -14,7 +14,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import sociam.pybossa.config.Config;
-
+/**
+ * 
+ * @author user Saud Aljaloud
+ * @author email sza1g10@ecs.soton.ac.uk
+ *
+ */
 @Path("/sendTaskRun")
 public class sendTaskRun {
 	private static final Logger logger = Logger.getLogger(sendTaskRun.class);

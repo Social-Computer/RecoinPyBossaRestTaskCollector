@@ -13,7 +13,12 @@ import org.json.JSONObject;
 
 import sociam.pybossa.config.Config;
 import sociam.pybossa.methods.MongodbMethods;
-
+/**
+ * 
+ * @author user Saud Aljaloud
+ * @author email sza1g10@ecs.soton.ac.uk
+ *
+ */
 @Path("/getTasks")
 public class GetTasks {
 	private static final Logger logger = Logger.getLogger(sendTaskRun.class);

@@ -24,10 +24,10 @@ import sociam.pybossa.methods.MongodbMethods;
  * @author email sza1g10@ecs.soton.ac.uk
  *
  */
-@Path("/Task")
-public class Task {
+@Path("/Project")
+public class Project {
 
-	private static final Logger logger = Logger.getLogger(Task.class);
+	private static final Logger logger = Logger.getLogger(Project.class);
 
 	@GET
 	@Produces("application/json" + ";charset=utf-8")
@@ -40,7 +40,7 @@ public class Task {
 			PropertyConfigurator.configure(stream);
 			Config.reload();
 
-			jsonResponse = MongodbMethods.getStatsFroRest(Config.taskCollection, null, null, offset, limit);
+			jsonResponse = MongodbMethods.getStatsFroRest(Config.projectCollection, null, null, offset, limit);
 
 			return Response.status(200).entity(jsonResponse.toString()).build();
 		} catch (Exception e) {
@@ -55,7 +55,7 @@ public class Task {
 	@GET
 	@Path("{id}")
 	@Produces("application/json" + ";charset=utf-8")
-	public Response taskToJson(@PathParam("id") Integer id, @DefaultValue("0") @QueryParam("offset") int offset,
+	public Response ProjectToJson(@PathParam("id") Integer id, @DefaultValue("0") @QueryParam("offset") int offset,
 			@DefaultValue("200") @QueryParam("limit") int limit) {
 
 		
@@ -65,35 +65,7 @@ public class Task {
 			PropertyConfigurator.configure(stream);
 			Config.reload();
 
-			jsonResponse = MongodbMethods.getStatsFroRest(Config.taskCollection, "task_id", id, offset, limit);
-			
-
-			return Response.status(200).entity(jsonResponse.toString()).build();
-		} catch (Exception e) {
-			logger.error("error", e);
-			jsonResponse.put("status", "error");
-			jsonResponse.put("message", e);
-			return Response.status(500).entity(jsonResponse.toString()).build();
-
-		}
-	}
-	
-	
-	@GET
-	@Path("{id}/Responses")
-	@Produces("application/json" + ";charset=utf-8")
-	public Response taskResponsesToJson(@PathParam("id") Integer id, @DefaultValue("0") @QueryParam("offset") int offset,
-			@DefaultValue("200") @QueryParam("limit") int limit) {
-
-		
-		JSONObject jsonResponse = new JSONObject();
-		try {
-			InputStream stream = sendTaskRun.class.getResourceAsStream("/log4j.properties");
-			PropertyConfigurator.configure(stream);
-			Config.reload();
-
-			jsonResponse = MongodbMethods.getStatsFroRest(Config.taskRunCollection, "task_id", id, offset, limit);
-			
+			jsonResponse = MongodbMethods.getStatsFroRest(Config.projectCollection, "project_id", id, offset, limit);
 
 			return Response.status(200).entity(jsonResponse.toString()).build();
 		} catch (Exception e) {
