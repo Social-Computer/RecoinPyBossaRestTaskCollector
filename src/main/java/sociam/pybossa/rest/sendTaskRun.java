@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import sociam.pybossa.config.Config;
+import sociam.pybossa.methods.MongodbMethods;
 /**
  * 
  * @author user Saud Aljaloud
@@ -40,7 +41,7 @@ public class sendTaskRun {
 			if (text != null && task_id != null && project_id != null && contributor_name != null && source != null) {
 				logger.debug("receiving a GET request with the following data + text=" + text + " task_id=" + task_id
 						+ " project_id=" + project_id + " contributor_name=" + contributor_name + " source=" + source);
-				Boolean isInserted = sociam.pybossa.TaskCollector.insertTaskRun(text, task_id, project_id,
+				Boolean isInserted = MongodbMethods.insertTaskRun(text, task_id, project_id,
 						contributor_name, source);
 				if (isInserted) {
 					logger.info("TaskRun was inserted");
