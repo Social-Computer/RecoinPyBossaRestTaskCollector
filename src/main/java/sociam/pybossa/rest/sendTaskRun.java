@@ -10,11 +10,13 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.bson.Document;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import sociam.pybossa.config.Config;
 import sociam.pybossa.methods.MongodbMethods;
+
 /**
  * 
  * @author user Saud Aljaloud
@@ -26,7 +28,7 @@ public class sendTaskRun {
 	private static final Logger logger = Logger.getLogger(sendTaskRun.class);
 
 	@GET
-	@Produces("application/json" )
+	@Produces("application/json")
 	public Response insertTaskRun(@QueryParam("text") String text, @QueryParam("task_id") Integer task_id,
 			@QueryParam("project_id") Integer project_id, @QueryParam("contributor_name") String contributor_name,
 			@QueryParam("source") String source) throws JSONException {
@@ -41,8 +43,17 @@ public class sendTaskRun {
 			if (text != null && task_id != null && project_id != null && contributor_name != null && source != null) {
 				logger.debug("receiving a GET request with the following data + text=" + text + " task_id=" + task_id
 						+ " project_id=" + project_id + " contributor_name=" + contributor_name + " source=" + source);
-				Boolean isInserted = MongodbMethods.insertTaskRun(text, task_id, project_id,
-						contributor_name, source);
+				if (!(source.equals("TaskView") && text.contains("PRIO"))) {
+					Document taskRun = MongodbMethods.getTaskRunsFromMongoDB(task_id, contributor_name, text);
+					if (taskRun != null) {
+						logger.error("You are only allowed one contribution for each task.");
+						logger.error("task_id= " + task_id + " screen_name: " + contributor_name);
+						status.put("message", "duplicate - no instruction added");
+						status.put("status", "error");
+						return Response.status(400).entity(status.toString()).build();
+					}
+				}
+				Boolean isInserted = MongodbMethods.insertTaskRun(text, task_id, project_id, contributor_name, source);
 				if (isInserted) {
 					logger.info("TaskRun was inserted");
 
