@@ -1,6 +1,7 @@
 package main.java.recoin.mongodb_version.rest;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -58,7 +59,6 @@ public class Project {
 	public Response ProjectToJson(@PathParam("id") Integer id, @DefaultValue("0") @QueryParam("offset") int offset,
 			@DefaultValue("200") @QueryParam("limit") int limit) {
 
-		
 		JSONObject jsonResponse = new JSONObject();
 		try {
 			InputStream stream = sendTaskRun.class.getResourceAsStream("/log4j.properties");
@@ -66,6 +66,20 @@ public class Project {
 			Config.reload();
 
 			jsonResponse = MongodbMethods.getStatsFroRest(Config.projectCollection, "project_id", id, offset, limit);
+			ArrayList<JSONObject> tasks = MongodbMethods.getTasksORRunsByProjectID(id, Config.taskCollection);
+			Integer tasksCount = 0;
+			if (tasks != null) {
+				tasksCount = tasks.size();
+			}
+
+			ArrayList<JSONObject> taskRuns = MongodbMethods.getTasksORRunsByProjectID(id, Config.taskRunCollection);
+			Integer taskRunsCount = 0;
+			if (taskRuns != null) {
+				taskRunsCount = taskRuns.size();
+			}
+
+			jsonResponse.put("tasks_count", tasksCount);
+			jsonResponse.put("taskRuns_count", taskRunsCount);
 
 			return Response.status(200).entity(jsonResponse.toString()).build();
 		} catch (Exception e) {
