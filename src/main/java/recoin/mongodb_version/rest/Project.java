@@ -66,13 +66,15 @@ public class Project {
 			Config.reload();
 
 			jsonResponse = MongodbMethods.getStatsFroRest(Config.projectCollection, "project_id", id, offset, limit);
-			ArrayList<JSONObject> tasks = MongodbMethods.getTasksORRunsByProjectID(id, Config.taskCollection);
+			ArrayList<JSONObject> tasks = MongodbMethods.getTasksORRunsByProjectID("project_id", id,
+					Config.taskCollection);
 			Integer tasksCount = 0;
 			if (tasks != null) {
 				tasksCount = tasks.size();
 			}
 
-			ArrayList<JSONObject> taskRuns = MongodbMethods.getTasksORRunsByProjectID(id, Config.taskRunCollection);
+			ArrayList<JSONObject> taskRuns = MongodbMethods.getTasksORRunsByProjectID("project_id", id,
+					Config.taskRunCollection);
 			Integer taskRunsCount = 0;
 			if (taskRuns != null) {
 				taskRunsCount = taskRuns.size();

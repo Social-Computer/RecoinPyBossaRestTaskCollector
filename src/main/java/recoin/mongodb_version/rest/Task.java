@@ -78,6 +78,32 @@ public class Task {
 		}
 	}
 	
+	@GET
+	@Path("project")
+	@Produces("application/json" + ";charset=utf-8")
+	public Response getTasksByProjectID(@PathParam("id") Integer id, @DefaultValue("0") @QueryParam("offset") int offset,
+			@DefaultValue("200") @QueryParam("limit") int limit,@QueryParam("project_id") int project_id) {
+
+		
+		JSONObject jsonResponse = new JSONObject();
+		try {
+			InputStream stream = sendTaskRun.class.getResourceAsStream("/log4j.properties");
+			PropertyConfigurator.configure(stream);
+			Config.reload();
+
+			jsonResponse = MongodbMethods.getStatsFroRest(Config.taskCollection, "project_id", project_id, offset, limit);
+			
+
+			return Response.status(200).entity(jsonResponse.toString()).build();
+		} catch (Exception e) {
+			logger.error("error", e);
+			jsonResponse.put("status", "error");
+			jsonResponse.put("message", e);
+			return Response.status(500).entity(jsonResponse.toString()).build();
+
+		}
+	}
+	
 	
 	
 	@GET
