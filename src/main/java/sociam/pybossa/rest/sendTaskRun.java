@@ -82,6 +82,7 @@ public class sendTaskRun {
 
 		} catch (Exception e) {
 			logger.error("Error", e);
+			status = new JSONObject();
 			status.put("status", "internal error: " + e);
 			return Response.status(500).entity(status.toString()).build();
 		}

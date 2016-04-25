@@ -46,6 +46,7 @@ public class Project {
 			return Response.status(200).entity(jsonResponse.toString()).build();
 		} catch (Exception e) {
 			logger.error("error", e);
+			jsonResponse = new JSONObject();
 			jsonResponse.put("status", "error");
 			jsonResponse.put("message", e);
 			return Response.status(500).entity(jsonResponse.toString()).build();
@@ -86,6 +87,7 @@ public class Project {
 			return Response.status(200).entity(jsonResponse.toString()).build();
 		} catch (Exception e) {
 			logger.error("error", e);
+			jsonResponse = new JSONObject();
 			jsonResponse.put("status", "error");
 			jsonResponse.put("message", e);
 			return Response.status(500).entity(jsonResponse.toString()).build();
