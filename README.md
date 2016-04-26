@@ -82,6 +82,7 @@ There are two additional fields added to this call: "tasks_count" and "taskRuns_
 	http://domain.org/RecoinRestController/Task/project?project_id={id}
 	http://domain.org/RecoinRestController/Task/{id}
     http://domain.org/RecoinRestController/getTasks
+getTasks This will return the top tasks without any taskruns, for there are none, then it returns task that are not yet completed
 	http://domain.org/RecoinRestController/Task/{id}/Responses
 
 
@@ -113,7 +114,6 @@ There are two additional fields added to this call: "tasks_count" and "taskRuns_
 
 	http://domain.org/RecoinRestController/TaskRun/project?project_id={id}
 
-This will return the top tasks without any taskruns, for there are none, then it returns task that are not yet completed
 
 ##### TaskRuns Insertion:
 
@@ -126,9 +126,9 @@ A response with 200 indicates a successful operation. 500 code for any general e
 
 If there are no records matching the request, response will be  {"message":""}
 
-### Pagination
+##### Pagination
 
-All request are given a default value of limit=200 and can be overridden alongside with offset. For example, http://domain.org/RecoinRestController/Project?limit={limit}&offset={offset}
+All requests are given a default value of limit=200 and can be overridden alongside with offset. For example, http://domain.org/RecoinRestController/Project?limit={limit}&offset={offset}
 Note that with each Json response there is a field "offset" that indicates whether you need to make another request with the given "offset" field value. A value of zero indicates that the complete list is retrieved. 
 
 ## Acknowledgements
