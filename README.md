@@ -7,8 +7,8 @@ There are three main components of TwitterCrowdSourcingController: Project - Tas
 
 All responses are Json objects.
 
-
-http://domain.org/RecoinRestController/Project/
+##### Project:
+	http://domain.org/RecoinRestController/Project/
 ```
 {
   "offset": 0,
@@ -35,11 +35,13 @@ http://domain.org/RecoinRestController/Project/
 }
 ```
 
-http://domain.org/RecoinRestController/Project/{id}
+	http://domain.org/RecoinRestController/Project/{id}
 
 There are two additional fields added to this call: "tasks_count" and "taskRuns_count".
 
-http://domain.org/RecoinRestController/Task/
+##### Task:
+
+	http://domain.org/RecoinRestController/Task/
 ```
 {
   "offset": 200,
@@ -77,13 +79,15 @@ http://domain.org/RecoinRestController/Task/
 }
 ```
 
-http://domain.org/RecoinRestController/Task/project?project_id={id}
+	http://domain.org/RecoinRestController/Task/project?project_id={id}
+	http://domain.org/RecoinRestController/Task/{id}
+    http://domain.org/RecoinRestController/getTasks
+	http://domain.org/RecoinRestController/Task/{id}/Responses
 
-http://domain.org/RecoinRestController/Task/{id}
 
-http://domain.org/RecoinRestController/Task/{id}/Responses
+##### TaskRuns:
 
-http://domain.org/RecoinRestController/TaskRun
+	http://domain.org/RecoinRestController/TaskRun
 ```
 {
   "taskRuns": [
@@ -107,15 +111,13 @@ http://domain.org/RecoinRestController/TaskRun
 }
 ```
 
-http://domain.org/RecoinRestController/TaskRun/project?project_id={id}
-
-
-http://domain.org/RecoinRestController/getTasks
+	http://domain.org/RecoinRestController/TaskRun/project?project_id={id}
 
 This will return the top tasks without any taskruns, for there are none, then it returns task that are not yet completed
 
+##### TaskRuns Insertion:
 
-http://domain.org/RecoinRestController/sendTaskRun?text={text}&task_id={task_id}&project_id={project_id}&contributor_name={contributor_name}&source={source}
+	http://domain.org/RecoinRestController/sendTaskRun?text={text}&task_id={task_id}&project_id={project_id}&contributor_name={contributor_name}&source={source}
 
 This sends a taskRun to the database. All fields must be provided.
 
@@ -132,5 +134,6 @@ Note that with each Json response there is a field "offset" that indicates wheth
 ## Acknowledgements
 
 This work is supported by the Lloyd's Register Foundation under the RECOIN project grant.
+
 
 
