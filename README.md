@@ -9,7 +9,7 @@ All responses are Json objects.
 
 
 http://domain.org/RecoinRestController/Project/
-```json
+```
 {
   "offset": 0,
   "project_list": [
@@ -40,7 +40,7 @@ http://domain.org/RecoinRestController/Project/{id}
 There are two additional fields added to this call: "tasks_count" and "taskRuns_count".
 
 http://domain.org/RecoinRestController/Task/
-```json
+```
 {
   "offset": 200,
   "tasks": [
@@ -84,7 +84,7 @@ http://domain.org/RecoinRestController/Task/{id}
 http://domain.org/RecoinRestController/Task/{id}/Responses
 
 http://domain.org/RecoinRestController/TaskRun
-```json
+```
 {
   "taskRuns": [
     {
